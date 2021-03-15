@@ -160,41 +160,48 @@ print(student_1 < student_2)  # сравнение студентов по ср�
 print()
 
 
+# ЗАДАНИЕ 4
 # для подсчета средней оценки за домашние задания по всем студентам в рамках
 # конкретного курса (в качестве аргументов принимаем список студентов и название курса);
 
 
-def course_midl_grade(data_list, course):
-    """ Подсчет средней оценки по всем студентам """
+def stud_course_midl_grade(data_list, course):
+    """ Подсчет средней оценки всех студентов """
+
+    count_person = 0
+    stud_midl_grade = 0
 
     for person in data_list:
-        count_person = 0
-        midl_grade_persons = 0
+        for cour, grade in person.grades.items():
+            if cour == course:
+                count_person += 1
+                stud_midl_grade += sum(grade) / len(grade) # добавляет среднюю оценку студента по курсу
 
-        if course in person.grades.keys():
-            count_person += 1
-            for cour, grade in person.grades.items():
-                midl_grade_persons += sum(grade) / len(grade)
-
-    print(midl_grade_persons)
-    print(count_person)
-
-    # for person in data_list:
-    #     if course in person.grades.keys():
-    #         count_person += 1
-    #         for grade in person.grades.values():
-    #             midl_grade_persons += sum(grade) / len(grade)
-    #             print(sum(grade))
-    # print(count_person)
-
-    # return round(midl_grade_persons / count_person, 2)
+    return stud_midl_grade / count_person
 
 
-print(student_1.grades)
-print(student_2.grades)
+print(f"Средняя оценка всех студентов по курсу Git {stud_course_midl_grade(all_students, 'Git')}")
+print(f"Средняя оценка всех студентов по курсу Python {stud_course_midl_grade(all_students, 'Python')}")
 
-print(course_midl_grade(all_students, 'Git'))
-print(course_midl_grade(all_students, 'Python'))
 
-# print(full_midl_grade(all_lecturers))
+# для подсчета средней оценки за лекции всех лекторов в рамках
+# конкретного курса (в качестве аргументов принимаем список лекторов и название курса).
+
+def lect_course_midl_grade(data_list, course):
+    """ Подсчет средней оценки всех лекторов """
+
+    count_person = 0
+    lect_midl_grade = 0
+
+    for person in data_list:
+        for cour, grade in person.grades.items():
+            if cour == course:
+                count_person += 1
+                lect_midl_grade += sum(grade) / len(grade) # добавляет среднюю оценку лектора по курсу
+
+    return lect_midl_grade / count_person
+
+
+print(f"Средняя оценка всех лекторов по курсу Git {lect_course_midl_grade(all_lecturers, 'Git')}")
+print(f"Средняя оценка всех лекторов по курсу Python {lect_course_midl_grade(all_lecturers, 'Python')}")
 
